@@ -19,10 +19,11 @@ class PostFactory extends Factory
     {
         $title = fake()->sentence();
         return [
+            'image' => fake()->imageUrl(),
             'title' => $title,
             'slug' => \Illuminate\Support\Str::slug($title),
             'content' => fake()->paragraph(5),
-            'category_id' => Category::inRandomOrder()->first()->id(),
+            'category_id' => Category::inRandomOrder()->first()->id,
             'user_id' => 1,
             'published_at' => fake()->optional()->dateTime()
 
