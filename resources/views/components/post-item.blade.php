@@ -19,7 +19,14 @@
         </x-primary-button>
         </a>
     </div>
-    <a href="#" class="">
-        <img class="w-48 h-full object-cover rounded-r-lg" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
-    </a>
+    @if ($post->image)
+        <a href="#" class="">
+            <img class="w-48 h-full object-cover rounded-r-lg" src="{{ Storage::url($post->image) }}" alt="" />
+        </a>
+    @else
+        <a href="#" class="">
+            <img class="w-48 h-full object-cover rounded-r-lg" src="/placeholder.jpg" alt="" />
+        </a>
+    @endif
+    
 </div>
