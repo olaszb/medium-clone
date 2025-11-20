@@ -3,6 +3,7 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8">
                 <h1 class="text-2xl mb-4">{{ $post->title }}</h1>
+                {{-- User avatar --}}
                 <div class="flex gap-4">
                     @if ($post->user->image)
                         <img src="{{ $post->user->imageUrl() }}" alt="{{ $post->user->name }}"
@@ -22,7 +23,29 @@
                             {{ $post->created_at->format('M d, Y') }}
                         </div>
                     </div>
+
                 </div>
+                {{-- User avatar --}}
+                {{-- Clap section --}}
+                <x-clap-button/>
+                {{-- Clap section --}}
+                {{-- Content Section --}}
+                <div class="mt-8">
+                    <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full">
+
+                    <div class="mt-4">
+                        {{ $post->content }}
+                    </div>
+                </div>
+                {{-- Content Section --}}
+                <div class="mt-8 ">
+                    <span class="px-4 py-2 bg-gray-200 rounded-xl">
+                        {{ $post->category->name }}
+
+                    </span>
+                </div>
+
+                <x-clap-button/>
             </div>
         </div>
     </div>
