@@ -11,12 +11,14 @@
                             <a class="hover:underline" href="{{ route('profile.show', $post->user) }}">
                                 {{ $post->user->name }}
                             </a>
-                            @if(auth()->user() && auth()->user()->id !== $post->user->id)
-                                &middot
+                            @auth
+                            @if(auth()->user()->id !== $post->user->id)
+                            &middot
                                 <button @click="follow()"  x-text="following ? 'Unfollow' : 'Follow'"
                                 :class="following ? 'text-red-500' : 'text-emerald-500'">
+                                </button>
                             @endif
-                            </button>
+                            @endauth
                         </x-follow-ctr>
                         <div class="flex gap-2 text-sm text-gray-500">
                             {{ $post->readTime() }} min read

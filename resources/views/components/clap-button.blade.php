@@ -1,4 +1,6 @@
 @props(['post'])
+
+@auth
 <div x-data="{
     hasLiked: {{ auth()->user()->hasLiked($post) ? 'true' : 'false' }},
     count: {{ $post->likes()->count() }},
@@ -31,3 +33,4 @@
     </button>
     <span x-text="count"></span>
 </div>
+@endauth
