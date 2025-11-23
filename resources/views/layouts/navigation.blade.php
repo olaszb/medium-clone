@@ -44,7 +44,7 @@
                                     {{ __('My Profile') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('profile.edit')">
+                                <x-dropdown-link :href="route('myPosts')">
                                     {{ __('My Posts') }}
                                 </x-dropdown-link>
 
@@ -111,7 +111,7 @@
                             {{ __('My Profile') }}
                         </x-responsive-nav-link>
 
-                        <x-responsive-nav-link :href="route('profile.edit')">
+                        <x-responsive-nav-link :href="route('myPosts')">
                             {{ __('My Posts') }}
                         </x-responsive-nav-link>
 
