@@ -17,11 +17,12 @@ class PostController extends Controller
      */
     public function index()
     {   
-        
-        
         $user = auth()->user();
 
-        $query = Post::with(['user','media'])->withCount('likes')->latest();
+        $query = Post::with(['user','media'])
+        ->where('published_at', '<=', now())
+        ->withCount('likes')
+        ->latest();
 
         if($user){
             $ids = $user->following()->pluck('users.id');
@@ -135,7 +136,9 @@ class PostController extends Controller
         $user = auth()->user();
 
         $query = $category->posts()
-        ->with(['user', 'media'])->withCount('likes')
+        ->where('published_at', '<=', now())
+        ->with(['user', 'media'])
+        ->withCount('likes')
         ->latest();
 
         if($user){

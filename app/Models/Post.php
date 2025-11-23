@@ -17,6 +17,10 @@ class Post extends Model implements HasMedia
     use InteractsWithMedia;
     use HasSlug;
 
+
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
     protected $fillable = [
         'title',
         'slug',
@@ -69,6 +73,10 @@ class Post extends Model implements HasMedia
     }
 
     public function creationDateFormatted($format = 'M d, Y'){
-        return $this->created_at->format($format);
+        $date = $this->published_at->format($format);
+        if(!$date){
+            return null;
+        }
+        return $date;
     }
 }
