@@ -14,10 +14,12 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
+        
+        
         $user = auth()->user();
 
-        $query = Post::latest();
+        $query = Post::with(['user','media'])->withCount('likes')->latest();
 
         if($user){
             $ids = $user->following()->pluck('users.id');
@@ -102,7 +104,19 @@ class PostController extends Controller
     }
 
     public function category(Request $request, Category $category){
-        $posts = $category->posts()->latest()->paginate(5);
+
+        $user = auth()->user();
+
+        $query = $category->posts()
+        ->with(['user', 'media'])->withCount('likes')
+        ->latest();
+
+        if($user){
+            $ids = $user->following()->pluck('users.id');
+            $query->whereIn('user_id', $ids);
+        }
+
+        $posts = $query->paginate(5);
 
         return view('post.index', [
             'posts' => $posts

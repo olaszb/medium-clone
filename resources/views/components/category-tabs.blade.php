@@ -8,7 +8,7 @@
     </li>
     @foreach ($categories as $category)
         <li class="me-2">
-            <a href="{{ route('post.byCategory', $category) }}"
+            <a href="{{ route('post.byCategory', $category->name) }}"
                 class="{{ 
                 Route::currentRouteNamed('post.byCategory') && 
                 request('category')->id == $category->id 
