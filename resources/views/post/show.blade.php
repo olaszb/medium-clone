@@ -5,19 +5,19 @@
                 <h1 class="text-2xl mb-4">{{ $post->title }}</h1>
                 {{-- User avatar --}}
                 <div class="flex gap-4">
-                    <x-user-avatar :user="$post->user"/>
+                    <x-user-avatar :user="$post->user" />
                     <div>
                         <x-follow-ctr :user="$post->user" class="flex gap-2">
                             <a class="hover:underline" href="{{ route('profile.show', $post->user) }}">
                                 {{ $post->user->name }}
                             </a>
                             @auth
-                            @if(auth()->user()->id !== $post->user->id)
-                            &middot
-                                <button @click="follow()"  x-text="following ? 'Unfollow' : 'Follow'"
-                                :class="following ? 'text-red-500' : 'text-emerald-500'">
-                                </button>
-                            @endif
+                                @if(auth()->user()->id !== $post->user->id)
+                                    &middot
+                                    <button @click="follow()" x-text="following ? 'Unfollow' : 'Follow'"
+                                        :class="following ? 'text-red-500' : 'text-emerald-500'">
+                                    </button>
+                                @endif
                             @endauth
                         </x-follow-ctr>
                         <div class="flex gap-2 text-sm text-gray-500">
@@ -29,8 +29,25 @@
 
                 </div>
                 {{-- User avatar --}}
+                @if ($post->user_id === Auth::id())
+
+                    <div class="py-4 mt-8 border-b border-t border-gray-200">
+                        <x-primary-button>
+                            Edit Post
+                        </x-primary-button>
+                        <form class="inline-block" action="{{ route('post.destroy', $post) }}" method="post">
+                            @csrf
+                            @method('delete')
+
+                            <x-danger-button>
+                                Delete Post
+                            </x-danger-button>
+                        </form>
+                    </div>
+                @endif
+
                 {{-- Clap section --}}
-                <x-clap-button :post="$post"/>
+                <x-clap-button :post="$post" />
                 {{-- Clap section --}}
                 {{-- Content Section --}}
                 <div class="mt-8">
@@ -48,7 +65,7 @@
                     </span>
                 </div>
 
-                <x-clap-button :post="$post"/>
+                <x-clap-button :post="$post" />
             </div>
         </div>
     </div>

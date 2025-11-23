@@ -6,6 +6,7 @@ use App\Http\Requests\PostCreateRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -100,7 +101,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if($post->user_id !== Auth::id()){
+            abort(403);
+        }
+        $post->delete();
+
+        return redirect()->route('dashboard');
     }
 
     public function category(Request $request, Category $category){
