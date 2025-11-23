@@ -145,7 +145,7 @@
                         <x-responsive-nav-link :href="route('login')">
                             {{ __('Login') }}
                         </x-responsive-nav-link>
-                        <x-responsive-nav-link href="route('register')">
+                        <x-responsive-nav-link :href="route('register')">
                             {{ __('Create an account') }}
                         </x-responsive-nav-link>
                     </div>
