@@ -18,14 +18,14 @@
             </x-primary-button>
         </a>
     </div>
-    @if ($post->image)
+    {{-- @if ($post->imageUrl()) --}}
         <a href="{{ route('post.show', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="">
-            <img class="w-48 h-full object-cover rounded-r-lg" src="{{ Storage::url($post->image) }}" alt="" />
+            <img class="w-48 h-full object-cover rounded-r-lg" src="{{ $post->imageUrl('preview') }}" alt="" />
         </a>
-    @else
+    {{-- @else
         <a href="#" class="">
             <img class="w-48 h-full object-cover rounded-r-lg" src="/placeholder.jpg" alt="" />
         </a>
-    @endif
+    @endif --}}
 
 </div>
