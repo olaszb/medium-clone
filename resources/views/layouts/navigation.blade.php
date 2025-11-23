@@ -13,11 +13,11 @@
             </div>
             <div class="flex">
                 @auth
-                <a href="{{ route('post.create') }}" class="flex items-center">
-                    <x-primary-button>
-                        Create Post
-                    </x-primary-button>
-                </a>
+                    <a href="{{ route('post.create') }}" class="flex items-center">
+                        <x-primary-button>
+                            Create Post
+                        </x-primary-button>
+                    </a>
 
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -39,16 +39,26 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('profile.edit')">
-                                    {{ __('Profile') }}
+
+                                <x-dropdown-link :href="route('profile.show', auth()->user())">
+                                    {{ __('My Profile') }}
                                 </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    {{ __('My Posts') }}
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    {{ __('Edit Profile') }}
+                                </x-dropdown-link>
+
 
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 
                                     <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-                                                    this.closest('form').submit();">
+                                                            this.closest('form').submit();">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
@@ -58,12 +68,14 @@
                 @endauth
 
                 @guest
-                    <a href="{{ route('login') }}" class="ml-3 hidden sm:flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                    <a href="{{ route('login') }}"
+                        class="ml-3 hidden sm:flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                         Login
                     </a>
-                    <a href="{{ route('register') }}" class="hidden sm:flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                    <a href="{{ route('register') }}"
+                        class="hidden sm:flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                         Create an account
-                    </a>    
+                    </a>
 
                 @endguest
                 <!-- Hamburger -->
@@ -95,16 +107,26 @@
                     </div>
 
                     <div class="mt-3 space-y-1">
-                        <x-responsive-nav-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                        <x-responsive-nav-link :href="route('profile.show', auth()->user())">
+                            {{ __('My Profile') }}
                         </x-responsive-nav-link>
+
+                        <x-responsive-nav-link :href="route('profile.edit')">
+                            {{ __('My Posts') }}
+                        </x-responsive-nav-link>
+
+
+                        <x-responsive-nav-link :href="route('profile.edit')">
+                            {{ __('Edit Profile') }}
+                        </x-responsive-nav-link>
+
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
                             <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                            this.closest('form').submit();">
+                                                    this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-responsive-nav-link>
                         </form>
@@ -112,5 +134,24 @@
                 </div>
             </div>
         @endauth
+        @guest
+            <!-- Responsive Navigation Menu -->
+            <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+
+                <!-- Responsive Settings Options -->
+                <div class="pt-4 pb-1 border-t border-gray-200">
+                    <div class="space-y-1">
+                        <!-- Authentication -->
+                        <x-responsive-nav-link :href="route('login')">
+                            {{ __('Login') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="route('register')">
+                            {{ __('Create an account') }}
+                        </x-responsive-nav-link>
+                    </div>
+                </div>
+            </div>
+
+        @endguest
     </div>
 </nav>
