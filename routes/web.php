@@ -22,6 +22,10 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
+    Route::get('/post/{post:slug}', [PostController::class, 'edit'])->name('post.edit');
+
+    Route::put('/post/{post}',[PostController::class, 'update'])->name('post.update');
+
     Route::get('/my-posts', [PostController::class, 'myPosts'])->name('myPosts');
 
     Route::post('/follow/{user}', [FollowerController::class, 'followUnfollow'])->name('follow');

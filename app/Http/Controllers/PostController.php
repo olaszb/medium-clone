@@ -57,7 +57,8 @@ class PostController extends Controller
         // $image = $data['image'];
         // unset($data['image']);
         $data['user_id'] = auth()->id();
-        $data['slug'] = Str::slug($data['title']);
+
+        // $data['slug'] = Str::slug($data['title']);
 
         // $imagePath = $image->store('posts', 'public');
         // $data['image'] = $imagePath;
@@ -85,15 +86,34 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        if($post->user_id !== Auth::id()){
+            abort(403);
+        }
+        $categories = Category::get();
+
+        return view('post.edit', [
+            'post'=> $post,
+            'categories' => $categories
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(PostCreateRequest $request, Post $post)
     {
-        //
+        if($post->user_id !== Auth::id()){
+            abort(403);
+        }
+        $data = $request->validated();
+
+        $post->update($data);
+
+        if($data['image'] ?? false){
+            $post->addMediaFromRequest('image')->toMediaCollection();
+        }
+
+        return redirect()->route('post.show', ['username' => $post->user->username, 'post' => $post->slug]);
     }
 
     /**

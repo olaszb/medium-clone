@@ -32,7 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     ];
 
     public function registerMediaConversions(?Media $media = null): void{
-        $this->addMediaConversion('avatar')->width(128)->crop(128,128);
+        $this->addMediaConversion('avatar')->width(128)->crop(128,128)->nonQueued();
     }
 
     public function registerMediaCollections():void{
